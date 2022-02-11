@@ -36,9 +36,4 @@ pick x86 or x86_64 for Windows
 
 custom scoop manifest json file: scoop + custom gcc url + posix threads
 
-{
-"version": "9.3.0",
-"homepage": "https://repo.msys2.org/mingw/x86_64/",
-"url": "https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-gcc-9.3.0-2-any.pkg.tar.xz",
-"args": ["--enable-threads=posix"]
-}
+`{ "version": "9.3.0", "homepage": "https://repo.msys2.org/mingw/x86_64/", "url": "https://repo.msys2.org/mingw/x86_64/mingw-w64-x86_64-gcc-9.3.0-2-any.pkg.tar.xz", "args": ["--enable-threads=posix"] }`
