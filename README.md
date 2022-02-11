@@ -2,18 +2,18 @@
 
 loosely defined personal-use collection of notes, commands, scripts etc for CLI's and tools
 
-## Media tool notes
+## media tool notes
 
 - [FFmpeg](ffmpeg.md)
 - [youtube-dl](youtube-dl.md)
 
-## Web development build notes
+## compiling notes
+
+- [gcc-godot](gcc-godot.md)
+
+## web development build script notes
 
 - config (Vitejs, TailwindCSS, Babel)
 - deploy (Surge.sh)
 - test (a11y)
 - document (JSDoc)
-
-# compiling notes
-
-- [gcc-godot](gcc-godot.md)
