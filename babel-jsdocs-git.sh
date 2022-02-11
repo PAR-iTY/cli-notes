@@ -71,7 +71,7 @@ git init
 git add -A
 
 # commit all tracked files
-git commit -m "placeholder commit message"
+git commit -m "updated babel and jsdocs"
 
 # ------------------------------------------------------------------
 #
