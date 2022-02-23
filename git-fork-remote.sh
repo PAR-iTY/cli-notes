@@ -99,3 +99,21 @@ git push origin <branch-name>
 
 # now update forked repo main branch to mirror upstream via origin
 git push origin main
+
+# ---------------------------------------------------------------------#
+#
+#          PUSH NEW LOCAL BRANCH TO NEW REMOTE BRANCH
+#
+# ---------------------------------------------------------------------#
+
+# create and switch to new branch
+git checkout -b <new-branch>
+
+# <make some changes>
+
+git add -A
+
+git commit -m "<new-branch-msg>"
+
+# push changes to set upstream new branch
+git push --set-upstream origin <new-branch>
