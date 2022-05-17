@@ -151,14 +151,20 @@ bash loop
 - ffmpeg wouldn't convert MOV-h.265 to MP4-h.264 directly
 
   `ffmpeg -i input.MOV -c copy output-1.mp4`
+
 - stream copy MOV-h.265 to MP4 or MKV etc
 
   `ffmpeg -i output-1.mp4 -map 0 -c:v libx264 -crf 18 -c:a copy output-2.mp4`
+
 - convert to MP4-h.264 and use map 0 to merge all h.265 streams
 
 ### animation tuned h.265 ed, edd n' eddy example
 
 `ffmpeg -i ed.m2ts -c:a copy -c:v libx265 -vtag hvc1 -tune animation -crf 26 ed.mkv`
+
+### create a GIF example
+
+`ffmpeg -i input.ext -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 output.gif`
 
 # ffplay
 
