@@ -1,3 +1,4 @@
+```
 // example ~/.config/scoop/config.json
 {
   "last_update": "2024-07-06T13:44:01.5049604+12:00",
@@ -23,6 +24,7 @@ aria2-min-split-size (default: 5M)
 aria2-options (default: )
 
 // jim scoop list
+
 Name                        Version            Source      Updated             Info
 ----                        -------            ------      -------             ----
 7zip                        24.07              main        2024-07-05 15:21:34
@@ -96,3 +98,4 @@ winscp                      6.3.4              extras      2024-07-05 15:49:39
 wireguard-np                0.5.3              nonportable 2023-08-21 09:22:06
 yq                          4.44.2             main        2024-07-05 15:49:42
 yt-dlp                      2024.07.02         main        2024-07-05 15:49:47
+```
