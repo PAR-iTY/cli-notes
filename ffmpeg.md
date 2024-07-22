@@ -2,6 +2,23 @@
 
 personal collection of notes, parameters, commands etc
 
+## todo
+
+## miniDV firewire conversion
+<!-- Best way is a Firewire 800 to Thunderbolt 2 plus a Thunderbolt 2 to Thunderbolt 3 adapter. And then using either Quicktime (if you're okay with it's default de-interlacing and other "enhancements" it does) or just dumping the raw DV files using ffmpeg. Here's the command I use: -->
+ffmpeg -f avfoundation -capture_raw_data true -i "DV-VCR" -c copy -map 0 -f rawvideo capture.dv
+
+<!-- And then if you want to convert to Prores LT: -->
+ffmpeg -i capture.dv -c:v prores_ks -profile:v 1 -colorspace smpte170m -color_primaries smpte170m -color_trc 1 -c:a copy -movflags +write_colr capture_prores.mov
+
+`ffmpeg -i "$(ytdl --get-url o60dwXu_i40 | head -n 1)" -i "$(ytdl --get-url o60dwXu_i40 | head -n 2)" -c copy | vlc`
+pass youtube media url to vlc
+
+## input
+
+`-i "$(ls -Art | tail -n 1)"`
+use the most recently added (/modified?) file in cwd
+
 ## parameters
 
 `-movflags faststart`
@@ -73,6 +90,11 @@ HEVC
 
 ### VP9
 
+<!-- -threads 8 row-mt 1 -->
+
+`-row-mt 1`
+this has something to do with increasing thread use
+
 `-crf`
 `0` lossless
 `~15` indistinguishable from lossless
@@ -121,6 +143,9 @@ ID3-tag metadata
 custom tags can be written if -movflags use_metadata_tags is added
 This applies both for adding new tags or carrying over custom global tags from the input
 
+`-write_id3v2 1`
+AIFF muxer setting for preserving metadata
+
 ### opus
 
 `-ar 48000`
@@ -136,6 +161,9 @@ DCR-SR45 MPG to MP4
 
 `for file in *.MPG; do ffmpeg -i "$file" -c:v libx264 -movflags +faststart -preset veryslow -crf 17 -vf yadif=1 -c:a aac "${file%.*}".mp4; done`
 bash loop
+
+myffmpeg loop
+`for file in *.MPG; do myffmpeg source=$file "${file%.*}".mp4; done`
 
 ### discord embedding
 
@@ -165,6 +193,22 @@ bash loop
 ### create a GIF example
 
 `ffmpeg -i input.ext -vf "fps=10,scale=320:-1:flags=lanczos,split[s0][s1];[s0]palettegen[p];[s1][p]paletteuse" -loop 0 output.gif`
+
+### Jellyfin HLS playlist stream conversion example
+
+`ffmpeg -fflags +genpts -i file:"input.ext" -map_metadata -1 -map_chapters -1 -threads 0 -map 0:0 -map 0:1 -map -0:s -codec:v:0 copy -start_at_zero -vsync -1 -codec:a:0 copy -strict -2 -copyts -avoid_negative_ts disabled -max_muxing_queue_size 2048 -f hls -max_delay 5000000 -hls_time 6 -hls_segment_type mpegts -start_number 0 -hls_segment_filename "output%d.ts" -hls_playlist_type vod -hls_list_size 0 -y "output.m3u8"`
+
+`C:\Program Files\Jellyfin\Server\ffmpeg.exe -hwaccel cuda -hwaccel_output_format cuda -extra_hw_frames 3 -autorotate 0 -i file:"D:\OLD\Video\Movies\MCU\WandaVision (2021) COMPLETE S01 (1080p DSNP WEBRip 10bit HEVC x265 imSamirOFFICIAL)\WandaVision S01E01 1080p DSNP WEBRip 10bit HEVC x265 English DDP 5.1 Atmos ESub ~ imSamirOFFICIAL.mkv" -map_metadata -1 -map_chapters -1 -threads 0 -map 0:0 -map 0:1 -map -0:s -codec:v:0 h264_nvenc -preset default -b:v 5602708 -maxrate 5602708 -bufsize 11205416 -profile:v:0 high -g:v:0 72 -keyint_min:v:0 72 -sc_threshold:v:0 0 -vf "scale_cuda=format=nv12" -start_at_zero -vsync -1 -codec:a:0 aac -ac 6 -ab 640000 -copyts -avoid_negative_ts disabled -max_muxing_queue_size 2048 -f hls -max_delay 5000000 -hls_time 3 -hls_segment_type mpegts -start_number 0 -hls_segment_filename "C:\ProgramData\Jellyfin\Server\transcodes\f8f425448e444b441d7e85c081ed87e4%d.ts" -hls_playlist_type vod -hls_list_size 0 -y "C:\ProgramData\Jellyfin\Server\transcodes\f8f425448e444b441d7e85c081ed87e4.m3u8"`
+
+### convert to h.264 and stream to VLC (to then cast to TV)
+
+`ffmpeg -re -i "input.ext" -vcodec libx264 -f mpegts udp://127.0.0.1:1234?pkt_size=1316`
+useful for casting to devices like TVs that can't display modern formats
+apparently specifying a packet size is important
+
+`udp://@127.0.0.1:1234?pkt_size=1316`
+then in VLC open a network stream using `mpegts` value
+note: must add the '@' for UDP to work
 
 # ffplay
 
