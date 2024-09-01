@@ -30,7 +30,6 @@ ipfreely() {
 # full scoop update
 alias scoopclean="bwsh scoop-clean.ps1"
 
-
 # get exclusion paths from defender (todo: add a get/set switch)
 alias exclusions="bwsh 'Get-MpPreference | Select-Object -Property ExclusionPath -ExpandProperty ExclusionPath'"
 
