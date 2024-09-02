@@ -17,8 +17,8 @@ personal-use collection of notes, commands, scripts etc for CLI's and tools
 ## git notes
 - [git-remote](git/fork-remote.sh)
 - [git-merge](git/merge.sh)
-- [git-utils](git/utils.sh)
 
 ## media notes
 - [FFmpeg](media/ffmpeg.md)
 - [youtube-dl](media/youtube-dl.md)
+- [pwsh-music](media/music.ps1)
