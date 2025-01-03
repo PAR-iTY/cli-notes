@@ -2,14 +2,19 @@
 
 personal collection of notes, parameters, commands etc
 
-## todo
+<!-- todo -->
+## cuda gpu + scale to 1080p
+`ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i "input_file.mp4" -c:a copy -vf "scale_cuda=-2:1080" -c:v h264_nvenc "output_file.mp4"`
+-hwaccel cuda chooses appropriate hw accelerator
+-hwaccel_output_format cuda keeps the decoded frames in GPU memory
+-c:v h264_nvenc selects the NVIDIA hardware accelerated H.264 encoder
 
 ## miniDV firewire conversion
 <!-- Best way is a Firewire 800 to Thunderbolt 2 plus a Thunderbolt 2 to Thunderbolt 3 adapter. And then using either Quicktime (if you're okay with it's default de-interlacing and other "enhancements" it does) or just dumping the raw DV files using ffmpeg. Here's the command I use: -->
-ffmpeg -f avfoundation -capture_raw_data true -i "DV-VCR" -c copy -map 0 -f rawvideo capture.dv
+`ffmpeg -f avfoundation -capture_raw_data true -i "DV-VCR" -c copy -map 0 -f rawvideo capture.dv`
 
 <!-- And then if you want to convert to Prores LT: -->
-ffmpeg -i capture.dv -c:v prores_ks -profile:v 1 -colorspace smpte170m -color_primaries smpte170m -color_trc 1 -c:a copy -movflags +write_colr capture_prores.mov
+`ffmpeg -i capture.dv -c:v prores_ks -profile:v 1 -colorspace smpte170m -color_primaries smpte170m -color_trc 1 -c:a copy -movflags +write_colr capture_prores.mov`
 
 `ffmpeg -i "$(ytdl --get-url o60dwXu_i40 | head -n 1)" -i "$(ytdl --get-url o60dwXu_i40 | head -n 2)" -c copy | vlc`
 pass youtube media url to vlc
