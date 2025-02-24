@@ -25,10 +25,10 @@ alias src=". ~/.bashrc"
 mouse() {
     if [[ "${1,,}" == "d" ]]; then
         # disable mouse
-        bwsh "pnputil /disable-device 'HID\VID_046D&PID_C08B&MI_00\7&2D21A895&0&0000'"
+        bwsh "pnputil /disable-device '<UID>'"
     elif [[ "${1,,}" == "e" ]]; then
         # enable mouse
-        bwsh "pnputil /enable-device 'HID\VID_046D&PID_C08B&MI_00\7&2D21A895&0&0000'"
+        bwsh "pnputil /enable-device '<UID>'"
     else
         echo "${RED}<error>${NORMAL} mouse function needs a 'd' or 'e' argument to disable or enable respectively${RED}<exiting>"
     fi
@@ -51,11 +51,11 @@ svv() {
 }
 
 # diff two dirs recursively
-#  diff -ur /d/sea/vegas /e/ssd/vegas
+#  diff -ur <path> <path>
 # get files only found in second dir
-# comm -13 <(cd /e/ssd/vegas && find -type f | sort) <(cd /d/sea/vegas && find -type f | sort)
+# comm -13 <(cd <path> && find -type f | sort) <(cd <path> && find -type f | sort)
 # remove paths to double check we only talking about file differences here not just a dir change
-# comm -13 <(cd /e/ssd/vegas && find -type f -execdir echo {} ';' | sort) <(cd /d/sea/vegas && find -type f -execdir echo {} ';' | sort)
+# comm -13 <(cd <path> && find -type f -execdir echo {} ';' | sort) <(cd <path> && find -type f -execdir echo {} ';' | sort)
 
 # find lowhyph files and pipe to vlc queue
 # works for hc-wxf1m files cos they all caps and no spaces
@@ -157,7 +157,6 @@ alias ppath='echo $PATH | tr : "\n"'
 # alias sherlock="python -m /c/evo/dev/py/sherlock/sherlock_project/sherlock.py"
 
 # return maximum metadata values
-# from: https://exiftool.org/faq.html#Q30
 exifall() {
     exiftool -ee3 -U -G3:1 -api requestall=3 -api largefilesupport "$1"
 }
@@ -169,40 +168,6 @@ coinflip() {
 
 # list filesizes of dir contents
 alias dirsize="du -sh * | sort -h"
-
-# from: https://unix.stackexchange.com/a/607547
-b64decode() {
-    if [ "$#" -gt 0 ]; then
-        # concatenated arguments fed via a pipe
-        printf %s "$@" | base64 --decode
-    else
-        base64 --decode  # read from stdin
-    fi
-    ret=$?
-    # add one newline character
-    echo 
-    # return with base64's exit status to report decoding errors if any
-    return "$ret"
-}
-
-# reverse input (jerry-rigged rev)
-# from: https://stackoverflow.com/a/46594266
-rev() {
-    if [ "$#" -gt 0 ]; then
-        # concatenated arguments fed via a pipe
-        printf '%s' "$@" | base64 --decode
-    else
-        base64 --decode  # read from stdin
-    fi
-    ret=$?
-    # add one newline character
-    echo 
-    # return with base64's exit status to report decoding errors if any
-    return "$ret"
-    
-    echo "$1"
-    # echo "$1" | grep -o . | tac | tr -d '\n'
-}
 
 # call pwsh from bash
 bwsh() {

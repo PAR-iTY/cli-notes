@@ -139,6 +139,9 @@ can omit either the duration/end-time or the start time argument
 
 ## audio
 
+`-b:a 320k -ac 2 -ar 44100 -joint_stereo 0`
+high quality stereo
+
 `-c:a libmp3lame -q:a 0`
 VBR audio encoding
 
