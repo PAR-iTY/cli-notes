@@ -143,7 +143,7 @@ clamtime() {
     # run using gsudo in bash
     # --fdpass (does this even help? research file permission errors)
     # "$EUID"
-    find /c/ -printf '%f\n' | xargs clamdscan --multiscan --suppress-ok-results > "/c/evo/scoop/persist/clamav/logs/clamtime.log"
+    find /c/ -printf '%f\n' | xargs clamdscan --multiscan --suppress-ok-results > "some/path/clamtime.log"
 }
 
 # get exclusion paths from defender (todo: add a get/set switch)
@@ -152,9 +152,6 @@ alias exclusions="bwsh 'Get-MpPreference | Select-Object -Property ExclusionPath
 # get $path line by line
 # syntax requires single-quote alias cmd wrapper and doublequotes inside cmd
 alias ppath='echo $PATH | tr : "\n"'
-
-# sherlock alias
-# alias sherlock="python -m /c/evo/dev/py/sherlock/sherlock_project/sherlock.py"
 
 # return maximum metadata values
 exifall() {
@@ -186,7 +183,7 @@ teredofix() {
 
 # full ip reset and fix teredo state via pwsh
 ipfreely() {
-    # cmd /k /c/evo/bin/jimip.bat
+    # cmd /k ./jimip.bat
     # how to better handle multiple sudo calls?
     bwsh "sudo ipconfig /release"
     bwsh "sudo ipconfig /release6"
@@ -204,7 +201,7 @@ scoopclean() {
     # how to better handle multiple sudo calls?
     bwsh scoop-clean.ps1
     # call takeown.exe recursively and hide all terminal spam
-    ( bwsh "sudo takeown /r /d y /f C:\evo\scoop\apps\7zip > /dev/null 2>&1 & " > /dev/null 2>&1 & ) | grep -vi success
+    ( bwsh "sudo takeown /r /d y /f C:\scoop\apps\7zip > /dev/null 2>&1 & " > /dev/null 2>&1 & ) | grep -vi success
 }
 
 # dcr-sr45 convert and sort
@@ -284,12 +281,12 @@ dcrsr45_sfk() {
 
 # search notes
 notes() {
-    grep -niRF "$1" --exclude-dir=me /c/evo/notes
+    grep -niRF "$1" --exclude-dir=me <path>
 }
 
 # search historical bookmarks
 bookmarks() {
-    grep -hiPoR '(?<=href=")[^"]*' /d/umit/mdl/c-to-sea/bookmarks | grep "$1" # | sort -u
+    grep -hiPoR '(?<=href=")[^"]*' path/to/bookmarks | grep "$1" # | sort -u
     # idea: try return a whole section aka a folder of bookmarks somehow
     #       itll be different for html vs json etc
     #       should be predictable strings to target
@@ -327,13 +324,13 @@ ytdlpl() {
 # yt-dlp.exe --skip-download --print "%(duration>%H:%M:%S.%s)s %(creator)s %(uploader)s - %(title)s" tbuH6N33_SY
 
 # download with browser cookies
-# C:\evo\scoop\apps\ungoogled-chromium\current\chrome.exe --profile-directory=Default
+# C:\ungoogled-chromium\current\chrome.exe --profile-directory=Default
 # has an issue with chromium file permissions
 # fix: close chromium then run cmd
 alias ytdlcookie="$ytdl_base --cookies-from-browser chromium"
 
 winappdata() {
-    find /c/ProgramData "/c/Program Files" "/c/Program Files (x86)" /c/Users/jim/AppData -iname "*$1*" -not -path "*/tldr/*"
+    find /c/ProgramData "/c/Program Files" "/c/Program Files (x86)" /c/Users/larry/AppData -iname "*$1*" -not -path "*/tldr/*"
 }
 
 # limit to HKEY_LOCAL_MACHINE for now
